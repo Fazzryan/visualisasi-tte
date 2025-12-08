@@ -22,7 +22,7 @@ class AkunList extends Component
     public $name_new = '';
     public $email_new = '';
     public $password_new = '';
-    public $role_new = 'user'; // Default role
+    public $role_new = 'user_skpd'; // Default role
 
     // Properti untuk Modal Edit
     public $showEditModal = false;
@@ -31,6 +31,8 @@ class AkunList extends Component
     public $name = '';
     public $email = '';
     public $role = '';
+    public $password = ''; // Password Baru
+    public $password_confirmation = ''; // Konfirmasi Password
 
     // Properti untuk Modal Delete
     public $showDeleteModal = false;
@@ -57,10 +59,10 @@ class AkunList extends Component
     {
         // 1. Aturan Validasi
         $this->validate([
-            'nip_new' => 'required|numeric|digits:18|unique:users,nip', // NIP harus 18 digit dan unik
+            'nip_new' => 'required|numeric|min:16|unique:users,nip', // NIP harus 18 digit dan unik
             'name_new' => 'required|string|max:255',
             'email_new' => 'required|email|unique:users,email',
-            'password_new' => 'required|min:8', // Password minimal 8 karakter
+            'password_new' => 'required|min:6', // Password minimal 8 karakter
             'role_new' => 'required|string|in:user_skpd,admin,superadmin',
         ]);
 
@@ -86,26 +88,49 @@ class AkunList extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->role = $user->role;
+        // RESET password field setiap kali modal edit dibuka
+        $this->reset(['password', 'password_confirmation']);
+        $this->resetErrorBag(); // Bersihkan error validasi sebelumnya
         $this->showEditModal = true;
     }
 
     // Fungsi untuk menyimpan perubahan data pengguna
     public function save()
     {
-        $this->validate([
+        // 1. Definisikan aturan validasi dasar
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $this->editingUser->id,
-            'role_new' => 'required|string|in:user_skpd,admin,superadmin',
-        ]);
+            'role' => 'required|string|in:user_skpd,admin,superadmin', // Perbaiki: gunakan $this->role, bukan role_new
+        ];
 
-        $this->editingUser->update([
+        // 2. Tambahkan aturan validasi password HANYA jika field diisi
+        if (!empty($this->password)) {
+            $rules['password'] = 'required|min:6|confirmed'; // 'confirmed' akan cek $this->password_confirmation
+            $rules['password_confirmation'] = 'required';
+        }
+
+        // 3. Jalankan validasi
+        $validatedData = $this->validate($rules);
+
+        // 4. Persiapkan data update
+        $dataToUpdate = [
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
-        ]);
+        ];
 
+        // 5. Proses Password (Hashing)
+        if (!empty($this->password)) {
+            $dataToUpdate['password'] = Hash::make($this->password);
+        }
+
+        // 6. Eksekusi Update
+        $this->editingUser->update($dataToUpdate);
+
+        // 7. Tutup Modal dan Berikan Notifikasi
         $this->showEditModal = false;
-        session()->flash('success', 'Akun berhasil diperbarui.');
+        session()->flash('success', 'Akun ' . $this->name . ' berhasil diperbarui.');
     }
 
     // Fungsi untuk menampilkan modal DELETE

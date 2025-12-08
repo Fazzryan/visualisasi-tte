@@ -27,8 +27,8 @@
             </nav>
         </div>
 
+        @include('be.admin.layouts.session')
+
         <livewire:tte-specimen />
     </div>
 @endsection
-
-

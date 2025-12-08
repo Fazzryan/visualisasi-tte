@@ -10,9 +10,6 @@
                     </path>
                 </svg>
             </button>
-
-            <!-- Page title -->
-            {{-- <h1 class="ml-4 text-xl font-semibold text-gray-900 lg:ml-0">Dashboard Overview</h1> --}}
         </div>
 
         <!-- Right side -->

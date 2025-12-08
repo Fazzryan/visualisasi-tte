@@ -19,13 +19,13 @@ Route::group(['as' => 'auth.', 'prefix' => '/'], function () {
 //  Route Backend
 //--------------------------------------------------------------------------
 Route::group(['as' => 'be.', 'prefix' => '/dashboard', 'middleware' => 'cek_login'], function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('role:superadmin,admin');;
 
     Route::get('/spesimen', [DashboardController::class, 'spesimen'])->name('spesimen');
     //--------------------------------------------------------------------------
     //  Route Akun
     //--------------------------------------------------------------------------
-    Route::group(['as' => 'akun.', 'prefix' => '/akun'], function () {
+    Route::group(['as' => 'akun.', 'prefix' => '/akun', 'middleware' => ['role:superadmin,admin']], function () {
         Route::get('/', [AkunController::class, 'index'])->name('index');
     });
 });

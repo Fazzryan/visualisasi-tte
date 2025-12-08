@@ -37,7 +37,7 @@
     </style>
 </head>
 
-<body class="mesh-gradient min-h-screen flex items-center justify-center p-4">
+<body class="mesh-gradienta min-h-screen flex items-center justify-center p-4">
 
     <!-- Decorative Elements -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -60,25 +60,12 @@
         </div>
 
         <!-- Login Card -->
-        <div class="glass rounded-3xl shadow-2xl p-8">
+        <div class="glasss rounded-3xl border bg-white/80 border-green-300 p-8">
             <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-2">Selamat Datang</h2>
                 <p class="text-gray-600 text-sm">Silakan login untuk melanjutkan</p>
             </div>
 
-            <!-- Session Status -->
-            {{-- @if (session('status'))
-                <div class="mb-6 bg-green-50 border border-green-200 rounded-2xl p-4">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-green-600 shrink-0" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p class="text-green-700 text-sm">{{ session('status') }}</p>
-                    </div>
-                </div>
-            @endif --}}
             @include('be.admin.layouts.session')
             @if ($errors->any())
                 <div class="p-4 mb-4 text-sm text-red-800 border border-red-200 rounded-lg bg-red-50">
@@ -103,7 +90,7 @@
                             </svg>
                         </div>
                         <input type="nip" name="nip" value="{{ old('nip') }}" required autofocus
-                            class="w-full pl-12 pr-4 py-3.5 bg-white/50 border appearance-none border-slate-300 dark:border-slate-600 placeholder-slate-500 dark:placeholder-slate-400 text-slate-900 dark:text-slate-100 dark:bg-slate-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 focus:z-10 sm:text-base"
+                            class="w-full pl-12 pr-4 py-3.5 bg-white/50 border appearance-none border-slate-300 placeholder-slate-500 text-slate-900 rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 focus:z-10 sm:text-base"
                             placeholder="1234567890">
                     </div>
                 </div>
@@ -121,7 +108,7 @@
                         </div>
 
                         <input type="password" name="password" id="passwordInput" required
-                            class="w-full pl-12 pr-12 py-3.5 bg-white/50 border appearance-none border-slate-300 dark:border-slate-600 placeholder-slate-500 dark:placeholder-slate-400 text-slate-900 dark:text-slate-100 dark:bg-slate-700 rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 focus:z-10 sm:text-base"
+                            class="w-full pl-12 pr-12 py-3.5 bg-white/50 border appearance-none border-slate-300  placeholder-slate-500 text-slate-900 rounded-xl focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 focus:z-10 sm:text-base"
                             placeholder="Masukkan password">
 
                         <button type="button" id="togglePassword"
@@ -145,7 +132,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit"
-                    class="w-full py-3.5 bg-gradient-to-r from-green-600 to-cyan-600 text-white rounded-xl hover:from-green-700 hover:to-cyan-700 transition-all duration-200 font-medium shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 hover:-translate-y-0.5">
+                    class="w-full py-3.5 bg-green-500 text-white rounded-xl hover:bg-green-600 duration-200 font-medium shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 hover:-translate-y-0.5">
                     Masuk
                 </button>
             </form>

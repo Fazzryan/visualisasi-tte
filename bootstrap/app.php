@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             // DAFTARKAN MIDDLEWARE KUSTOM ANDA DI SINI
             'cek_login' => \App\Http\Middleware\CekLogin::class,
+            'role' =>  \App\Http\Middleware\CekRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

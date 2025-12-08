@@ -1,10 +1,6 @@
 <div class="p-6 bg-white rounded-3xl border border-slate-200">
 
-    @if (session()->has('success'))
-        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
-            {{ session('success') }}
-        </div>
-    @endif
+    @include('be.admin.layouts.session')
 
     <div class="flex flex-col md:flex-row justify-between mb-8 space-y-4 md:space-y-0">
         <div class="space-x-2 w-full md:w-1/3 md:flex md:flex-row md:items-center">
@@ -113,7 +109,7 @@
                             <div class="mt-4 space-y-4 ">
                                 {{-- Input NIP --}}
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-3">NIP (18 Digit)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">NIP</label>
                                     <input type="number" wire:model.defer="nip_new"
                                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 duration-200">
                                     @error('nip_new')
@@ -203,7 +199,7 @@
                             <div class="mt-4 space-y-4">
                                 {{-- Input NIP --}}
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-3">NIP (18 Digit)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">NIP</label>
                                     <input type="text" disabled wire:model.defer="nip"
                                         class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 duration-200">
                                 </div>
@@ -241,6 +237,30 @@
                                         <span class="text-red-500 text-xs">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                {{-- START: Input Password Baru --}}
+                                <hr class="my-4 border-gray-200">
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Password Baru
+                                        (Kosongkan jika tidak diubah)</label>
+                                    <input type="password" wire:model.defer="password"
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 duration-200">
+                                    @error('password')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Konfirmasi
+                                        Password</label>
+                                    <input type="password" wire:model.defer="password_confirmation"
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2 focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 duration-200">
+                                    @error('password_confirmation')
+                                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- END: Input Password Baru --}}
                             </div>
                         </div>
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
