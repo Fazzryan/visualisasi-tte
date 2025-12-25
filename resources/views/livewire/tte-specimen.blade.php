@@ -1,10 +1,10 @@
 <div class="p-6 bg-white rounded-3xl border border-slate-200">
-    <h3 class="text-lg font-medium text-gray-800 mb-6">Pencarian Spesimen TTE Pegawai</h3>
+    <h3 class="text-lg font-medium text-gray-800 mb-4">Pencarian Spesimen TTE Pegawai</h3>
 
     <form wire:submit.prevent="searchPegawai" class="space-y-4 mb-8">
         <div class="flex items-end space-x-4">
-            <div class="flex-grow">
-                <label for="nip" class="block text-sm font-medium text-gray-700 mb-3">NIP Pegawai</label>
+            <div class="max-w-[450px] w-full">
+                <!-- <label for="nip" class="block text-sm font-medium text-gray-700 mb-3">NIP Pegawai</label> -->
                 <input wire:model.defer="nip" type="number" id="nip" placeholder="Masukkan NIP"
                     class="px-4 py-2 border border-gray-300 rounded-xl duration-150 focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-500 w-full">
             </div>
@@ -54,21 +54,21 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700">NIP</label>
                     <input type="text" value="{{ $nip_pegawai }}" disabled
-                        class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                        class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-xl">
                 </div>
 
                 {{-- Nama Lengkap --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                    <input type="text" value="{{ $nama_lengkap }}" disabled
-                        class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                    <input type="text" wire:model.live="nama_lengkap"
+                        class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500">
                 </div>
 
                 {{-- Jabatan --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Jabatan</label>
-                    <input type="text" value="{{ $jabatan }}" disabled
-                        class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                    <input type="text" wire:model.live="jabatan" 
+                        class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500">
                 </div>
 
                 {{-- Pangkat dan Golongan --}}
@@ -76,12 +76,12 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nama Pangkat</label>
                         <input type="text" value="{{ $nama_pangkat }}" disabled
-                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-xl">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nama Golongan</label>
                         <input type="text" value="{{ $nama_golongan }}" disabled
-                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                            class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-xl">
                     </div>
                 </div>
             </div>
@@ -90,9 +90,9 @@
                 <h3 class="text-lg font-medium text-gray-800 border-b pb-2 mb-4">Pratinjau Spesimen TTE</h3>
 
                 <div id="tteSpecimenPreview" style="font-family: Arial, sans-serif;"
-                    class="border-[1px] bg-white border-2 shadow rounded-xl border-gray-300 p-2 min-w-[225px] w-auto max-w-[310px]">
+                    class="border-[1px] bg-white border-2 shadow rounded-xl border-gray-300 py-2 pl-1 pr-2 min-w-[225px] w-auto max-w-[289px]">
                     <div class="flex">
-                        <div class="flex-shrink-0">
+                        <div class="flex-shrink-0 -mr-2">
                             <img src="{{ asset('assets/img/logo/logokabtasik.png') }}" alt="Logo Kab. Tasikmalaya"
                                 style="width: 2cm; height: auto;">
                         </div>
@@ -102,7 +102,7 @@
                                     Ditandatangani secara elektronik oleh:</p>
 
                                 <p
-                                    class="text-[8px] font-arial-mt uppercase ml-4 break-word leading-[10px] font-medium ">
+                                    class="text-[8px] font-arial-mt ml-4 break-word leading-[10px] font-medium ">
                                     {{ $jabatan }}
                                 </p>
                             </div>
@@ -126,8 +126,7 @@
                 </button>
             </div>
         </div>
-</div>
-@endif
+    @endif
 </div>
 
 {{-- untuk download spesimen --}}

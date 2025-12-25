@@ -101,6 +101,22 @@ class TteSpecimen extends Component
         ]);
     }
 
+    /**
+     * Hook untuk format otomatis jabatan saat diinput
+     */
+    public function updatedJabatan($value)
+    {
+        // Daftar penggantian otomatis (hanya jika diikuti spasi agar tidak mengganggu saat mengetik/hapus)
+        $replacements = [
+            '/\ba\.?n\.?\s/i' => 'a.n. ',
+            '/\bplt\.?\s/i'   => 'Plt. ',
+            '/\bplh\.?\s/i'   => 'Plh. ',
+            '/\bpj\.?\s/i'    => 'Pj. ',
+        ];
+
+        $this->jabatan = preg_replace(array_keys($replacements), array_values($replacements), $value);
+    }
+
     public function render()
     {
         return view('livewire.tte-specimen');
