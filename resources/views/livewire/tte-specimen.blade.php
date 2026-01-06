@@ -60,15 +60,25 @@
                 {{-- Nama Lengkap --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                    <input type="text" wire:model.live="nama_lengkap"
-                        class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500">
+                    <input type="text" wire:model.live="nama_lengkap" @disabled(auth()->user()->role !== 'superadmin')
+                        class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 disabled:bg-gray-100 disabled:text-gray-500">
                 </div>
 
                 {{-- Jabatan --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Jabatan</label>
-                    <input type="text" wire:model.live="jabatan" 
-                        class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500">
+                    <div class="flex space-x-2">
+                        @if(auth()->user()->role === 'superadmin')
+                        <div class="w-1/4">
+                            <input type="text" wire:model.live="prefix" placeholder="Awalan (Plt., a.n.)"
+                                class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500">
+                        </div>
+                        @endif
+                        <div class="flex-grow">
+                            <input type="text" wire:model.live="jabatan" @disabled(auth()->user()->role !== 'superadmin')
+                                class="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-xl transition-all duration-150 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 disabled:bg-gray-100 disabled:text-gray-500">
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Pangkat dan Golongan --}}
@@ -103,7 +113,7 @@
 
                                 <p
                                     class="text-[8px] font-arial-mt ml-4 break-word leading-[10px] font-medium ">
-                                    {{ $jabatan }}
+                                    @if($prefix) {{ $prefix }} @endif {{ $jabatan }}
                                 </p>
                             </div>
                             <div class="flex-shrink-0">

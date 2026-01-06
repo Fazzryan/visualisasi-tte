@@ -9,6 +9,7 @@ class TteSpecimen extends Component
 {
     // Properti untuk Input Form
     public $nip = '';
+    public $prefix = ''; // Properti baru untuk awalan jabatan (khusus superadmin)
 
     // Properti untuk Menampilkan Hasil Data
     public $found = false; // Status apakah data ditemukan atau belum
@@ -29,7 +30,7 @@ class TteSpecimen extends Component
     public function searchPegawai()
     {
         // 1. Reset status, notifikasi, dan properti data
-        $this->reset(['found', 'nip_pegawai', 'nama_lengkap', 'jabatan', 'nama_pangkat', 'nama_golongan', 'message']);
+        $this->reset(['found', 'nip_pegawai', 'nama_lengkap', 'jabatan', 'prefix', 'nama_pangkat', 'nama_golongan', 'message']);
 
         // 2. Validasi NIP (optional: tambahkan digits:18 jika NIP wajib 18 digit)
         $this->validate([
@@ -63,7 +64,7 @@ class TteSpecimen extends Component
 
                     $this->nip_pegawai = $pegawaiData['nip'] ?? '-';
                     $this->nama_lengkap = $pegawaiData['nama_lengkap'] ?? '-';
-                    $this->jabatan = $pegawaiData['jabatan'] ?? '-';
+                    $this->jabatan = $this->formatJabatanString($pegawaiData['jabatan'] ?? '-');
                     $this->nama_pangkat = $pegawaiData['nama_pangkat'] ?? '-';
                     $this->nama_golongan = $pegawaiData['nama_golongan'] ?? '-';
 
@@ -95,6 +96,7 @@ class TteSpecimen extends Component
             'nip_pegawai',
             'nama_lengkap',
             'jabatan',
+            'prefix',
             'nama_pangkat',
             'nama_golongan',
             'message'
@@ -106,15 +108,36 @@ class TteSpecimen extends Component
      */
     public function updatedJabatan($value)
     {
-        // Daftar penggantian otomatis (hanya jika diikuti spasi agar tidak mengganggu saat mengetik/hapus)
+        $this->jabatan = $this->formatJabatanString($value);
+    }
+
+    /**
+     * Format jabatan menjadi UPPERCASE kecuali kata-kata tertentu.
+     */
+    private function formatJabatanString($value)
+    {
+        if (empty($value)) return $value;
+
+        // 1. Ubah semua menjadi UPPERCASE terlebih dahulu
+        $text = strtoupper($value);
+
+        // 2. Definisi kata yang harus kembali ke format Title Case/Exceptions
+        // Gunakan \b boundary agar tidak mengganti di tengah kata
         $replacements = [
-            '/\ba\.?n\.?\s/i' => 'a.n. ',
-            '/\bplt\.?\s/i'   => 'Plt. ',
-            '/\bplh\.?\s/i'   => 'Plh. ',
-            '/\bpj\.?\s/i'    => 'Pj. ',
+            '/\bPLT\./'       => 'Plt.',
+            '/\bPLH\./'       => 'Plh.',
+            '/\bPJ\./'        => 'Pj.',
+            '/\bPJS\./'       => 'Pjs.',
+            '/\bA\.N\./'      => 'a.n.',
+            '/\bA\.N /'       => 'a.n ', // handle case without dot if common
+            '/\bU\.B\./'      => 'u.b.',
+            '/\bU\.B /'       => 'u.b ',
         ];
 
-        $this->jabatan = preg_replace(array_keys($replacements), array_values($replacements), $value);
+        // 3. Apply replacements
+        $text = preg_replace(array_keys($replacements), array_values($replacements), $text);
+
+        return $text;
     }
 
     public function render()

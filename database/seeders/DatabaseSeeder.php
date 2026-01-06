@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             'nip' => '432007006200094',
             'name' => 'Fazryan',
             'email' => 'fazryan@gmail.com',
-            'password' => Hash::make('BajuButut123@'),
+            'password' => Hash::make('superFazryan@'),
             'role' => 'superadmin'
         ]);
 
