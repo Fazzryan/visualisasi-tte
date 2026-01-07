@@ -75,7 +75,7 @@
     </nav>
 
     <!-- User Profile Section -->
-    <div class="p-4 mt-auto border-t border-gray-100">
+    <!-- <div class="p-4 mt-auto border-t border-gray-100">
         <div class="flex items-center space-x-3">
 
             <div
@@ -87,5 +87,5 @@
                 <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
